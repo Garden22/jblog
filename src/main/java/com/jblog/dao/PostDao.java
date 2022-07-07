@@ -1,5 +1,7 @@
 package com.jblog.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,13 @@ public class PostDao {
 		PostVo post = sqlSession.selectOne("post.selectRecent", cateNo);
 		
 		return post;
+	}
+	
+	
+	public List<PostVo> selectCatePost(int cateNo) {
+		List<PostVo> pList = sqlSession.selectList("post.selectCatePost", cateNo);
+		
+		return pList;
 	}
 
 }

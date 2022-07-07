@@ -67,34 +67,19 @@
 				</c:if>
 				
 				<div id="list">
-					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
+					<div id="listTitle" class="text-left"><strong>${cateName}의 글</strong></div>
 					<table>
 						<colgroup>
 							<col style="">
 							<col style="width: 20%;">
 						</colgroup>
 						
-						<tr>
-							<td class="text-left"><a href="">08.페이징</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">07.첨부파일_MultipartResolver</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">06.jquery_ajax</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">05.javaScript</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">04.spring_어플리케이션_아키텍쳐</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						
+						<c:forEach items="${pList}" var="post">
+							<tr>
+								<td class="text-left"><a href="">${post.postTitle}</a></td>
+								<td class="text-right">${post.regDate}</td>
+							</tr>
+						</c:forEach>
 						
 					</table>
 				</div>

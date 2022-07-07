@@ -50,4 +50,13 @@
 			WHERE   ROWNUM = 1
 		]]>
 	</select>
+	
+	
+	<select id="selectName" parameterType="int" resultType="String">
+		<![CDATA[
+		    SELECT cate_name cateName
+		    FROM   category
+		    WHERE  cate_no = #{cateNo}
+		]]>
+	</select>
 </mapper>

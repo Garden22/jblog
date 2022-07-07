@@ -42,4 +42,11 @@ public class CategoryDao {
 		
 		return count;
 	}
+	
+	
+	public String selectName(int cateNo) {
+		String cateName = sqlSession.selectOne("category.selectName", cateNo);
+		
+		return cateName;
+	}
 }

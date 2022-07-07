@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,8 @@ public class BlogService {
 		
 		if (cateNo == null) cateNo = cDao.selectRecent(id);
 		map.put("post", pDao.selectRecent(cateNo));
+		map.put("cateName", cDao.selectName(cateNo));
+		map.put("pList", pDao.selectCatePost(cateNo));
 		
 		return map;
 	}

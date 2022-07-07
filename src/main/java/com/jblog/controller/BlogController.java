@@ -36,15 +36,8 @@ public class BlogController {
 	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
-		
-		
 		HashMap<String, Object> map = bService.blogInfo(id, cateNo);
 		model.addAllAttributes(map);
-		/*
-	    model.addAttribute("bVo", (BlogVo)map.get("bVo"));
-		
-		List<CategoryVo> cList = (List<CategoryVo>)map.get("cList");
-		model.addAttribute("cList", cList);*/
 						
 		return "/blog/blog-main";
 	}
