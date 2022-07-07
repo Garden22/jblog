@@ -38,4 +38,16 @@
 			WHERE  cate_no = #{cateNo}
 		]]>
 	</delete>
+	
+	
+	<select id="selectRecent" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT cateNo
+			FROM   (SELECT ROWNUM, cate_no cateNo
+			        FROM   category
+			        WHERE  id = #{id}
+			        ORDER BY cate_no DESC)
+			WHERE   ROWNUM = 1
+		]]>
+	</select>
 </mapper>

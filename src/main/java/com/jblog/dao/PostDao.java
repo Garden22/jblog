@@ -18,5 +18,12 @@ public class PostDao {
 		
 		return count;
 	}
+	
+	
+	public PostVo selectRecent(int cateNo) {
+		PostVo post = sqlSession.selectOne("post.selectRecent", cateNo);
+		
+		return post;
+	}
 
 }

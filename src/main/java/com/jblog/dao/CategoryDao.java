@@ -35,4 +35,11 @@ public class CategoryDao {
 		
 		return count;
 	}
+	
+	
+	public int selectRecent(String id) {
+		int count = sqlSession.selectOne("category.selectRecent", id);
+		
+		return count;
+	}
 }

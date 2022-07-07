@@ -37,6 +37,19 @@ public class BlogService {
 	}
 	
 	
+	public HashMap<String, Object> blogInfo(String id, Integer cateNo) {
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("bVo", bDao.selectBlog(id));
+		map.put("cList", cDao.selectCate(id));
+		
+		if (cateNo == null) cateNo = cDao.selectRecent(id);
+		map.put("post", pDao.selectRecent(cateNo));
+		
+		return map;
+	}
+	
+	
 	public void blogBasicUpdate(BlogVo bVo, MultipartFile file, String title) {
 		if (!file.isEmpty()) {
 			String orgName = file.getOriginalFilename();

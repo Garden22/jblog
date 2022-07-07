@@ -9,4 +9,28 @@
 			VALUES (seq_post_no.nextval, #{cateNo}, #{postTitle}, #{postContent}, SYSDATE)
 		]]>
 	</insert>
+	
+	
+	<select id="selectRecent" parameterType="int" resultType="postVo">
+		<![CDATA[
+			SELECT ROWNUM rn
+			       ,p.post_no postNo
+			       ,p.post_title postTitle
+			       ,c.id id
+			       ,c.name userName
+			       ,p.post_content postContent
+			       ,TO_CHAR(p.reg_date, 'YYYY/MM/DD') regDate
+			FROM   post p, (SELECT ROWNUM
+			                       ,c.cate_no cateNo
+			                       ,c.id id
+			                       ,u.user_name name
+			                FROM   users u, category c
+			                WHERE  u.id = c.id
+			                AND    c.cate_no = #{cateNo}
+			                ORDER BY c.cate_no DESC
+			                ) c
+			WHERE  p.cate_no = c.cateNo
+			AND    ROWNUM = 1 
+		]]>
+	</select>
 </mapper>
