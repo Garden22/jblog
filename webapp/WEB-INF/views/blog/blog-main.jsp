@@ -76,7 +76,7 @@
 						
 						<c:forEach items="${pList}" var="post">
 							<tr>
-								<td class="text-left"><a href="">${post.postTitle}</a></td>
+								<td class="text-left"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}">${post.postTitle}</a></td>
 								<td class="text-right">${post.regDate}</td>
 							</tr>
 						</c:forEach>

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class BlogService {
 	private PostDao pDao;
 	
 	
-	public HashMap<String, Object> blogInfo(String id) {
+	public Map<String, Object> blogInfo(String id) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
@@ -38,17 +39,27 @@ public class BlogService {
 	}
 	
 	
-	public HashMap<String, Object> blogInfo(String id, Integer cateNo) {
+	public Map<String, Object> blogInfo(String id, Integer cateNo, Integer postNo) {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
 		
 		if (cateNo == null) cateNo = cDao.selectRecent(id);
-		map.put("post", pDao.selectRecent(cateNo));
 		map.put("cateName", cDao.selectName(cateNo));
-		map.put("pList", pDao.selectCatePost(cateNo));
 		
+		List<PostVo> pList = pDao.selectCatePost(cateNo);
+		map.put("pList", pList);
+		
+		if (pList.size() == 0) map.put("post", null);
+		else {
+			if (postNo == null) postNo = pDao.selectRecent(cateNo);
+			
+			map.put("post", pDao.selectPost(postNo));
+		}
+		
+		System.out.println("id " + id + " cateNo " + cateNo + " postNo " + postNo);
+
 		return map;
 	}
 	

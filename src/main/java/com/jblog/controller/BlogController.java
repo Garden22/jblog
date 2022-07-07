@@ -2,8 +2,7 @@ package com.jblog.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,11 +31,11 @@ public class BlogController {
 	@Autowired
 	private BlogService bService;
 	
-	@RequestMapping(value = {"/{id}/{cateNo}", "/{id}"}, method={RequestMethod.GET, RequestMethod.POST})
-	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, Model model) {
+	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"}, method={RequestMethod.GET, RequestMethod.POST})
+	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, @PathVariable(required=false) Integer postNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
-		HashMap<String, Object> map = bService.blogInfo(id, cateNo);
+		Map<String, Object> map = bService.blogInfo(id, cateNo, postNo);
 		model.addAllAttributes(map);
 						
 		return "/blog/blog-main";
@@ -55,7 +54,7 @@ public class BlogController {
 			return "redirect:/blog/" + id;
 		}
 		
-		HashMap<String, Object> map = bService.blogInfo(id);
+		Map<String, Object> map = bService.blogInfo(id);
 		model.addAttribute("bVo", (BlogVo)map.get("bVo"));
 		
 		return "/blog/admin/blog-admin-basic";
@@ -66,7 +65,7 @@ public class BlogController {
 	public String basicChange(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("blogTitle") String title) throws UnsupportedEncodingException {
 		System.out.println("blog > " + id + "> admin > basicChange");
 
-		HashMap<String, Object> map = bService.blogInfo(id);
+		Map<String, Object> map = bService.blogInfo(id);
 		bService.blogBasicUpdate((BlogVo)map.get("bVo"), file, title);
 		
 		id = URLEncoder.encode(id, "UTF-8");
@@ -85,7 +84,7 @@ public class BlogController {
 			return "redirect:/blog/" + id;
 		}
 		
-		HashMap<String, Object> map = bService.blogInfo(id);
+		Map<String, Object> map = bService.blogInfo(id);
 		model.addAllAttributes(map);
 		
 		return "/blog/admin/blog-admin-cate";
@@ -126,7 +125,7 @@ public class BlogController {
 			return "redirect:/blog/" + id;
 		}
 		
-		HashMap<String, Object> map = bService.blogInfo(id);
+		Map<String, Object> map = bService.blogInfo(id);
 		model.addAllAttributes(map);
 		
 		return "/blog/admin/blog-admin-write";

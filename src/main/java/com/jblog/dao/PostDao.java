@@ -22,8 +22,15 @@ public class PostDao {
 	}
 	
 	
-	public PostVo selectRecent(int cateNo) {
-		PostVo post = sqlSession.selectOne("post.selectRecent", cateNo);
+	public int selectRecent(int cateNo) {
+		int postNo = sqlSession.selectOne("post.selectRecent", cateNo);
+		
+		return postNo;
+	}
+	
+	
+	public PostVo selectPost(int postNo) {
+		PostVo post = sqlSession.selectOne("post.selectPost", postNo);
 		
 		return post;
 	}
