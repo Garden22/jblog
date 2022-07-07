@@ -131,6 +131,7 @@ public class BlogController {
 		return "/blog/admin/blog-admin-write";
 	}
 	
+	
 	@RequestMapping(value="/{id}/admin/write", method={RequestMethod.GET, RequestMethod.POST})
 	public String writePost(@PathVariable("id") String id, @ModelAttribute PostVo post) throws UnsupportedEncodingException {
 		System.out.println("blog > write");

@@ -1,5 +1,6 @@
 package com.jblog.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,13 +82,17 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletRequest request) {
 		System.out.println("user > logout");
-		
+				
 		session.removeAttribute("authUser");
 		session.invalidate();
 		
-		return "redirect:/";
+		String referer = (String) request.getHeader("REFERER");
+		int idx = referer.indexOf("jblog");
+		referer = referer.substring(idx + 5);
+		
+		return "redirect:" + referer;
 	}
 
 }

@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="selectAuthUser" parameterType="UserVo" resultType="UserVo">
-		SELECT user_no
+		SELECT user_name
 		       ,id
 		FROM   users
 		WHERE  id = #{id}

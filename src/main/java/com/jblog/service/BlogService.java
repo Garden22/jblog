@@ -57,8 +57,6 @@ public class BlogService {
 			
 			map.put("post", pDao.selectPost(postNo));
 		}
-		
-		System.out.println("id " + id + " cateNo " + cateNo + " postNo " + postNo);
 
 		return map;
 	}
