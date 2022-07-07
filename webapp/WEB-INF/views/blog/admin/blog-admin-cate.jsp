@@ -77,7 +77,7 @@
 		      	</table> 
 			
 				<div id="btnArea">
-		      		<button id="btnAddCate" class="btn_l" type="submit" >카테고리추가</button>
+		      		<button id="btnAddCate" class="btn_l" type="button" >카테고리추가</button>
 		      	</div>
 			
 			</div>
@@ -95,7 +95,8 @@
 
 <script type="text/javascript">
 
-$("#cateList .btnCateDel").on("click", function(){
+$("#cateList").on("click", ".btnCateDel", function() {
+	console.log("아얏")
 	var no = $(this).attr("data-num");
 	var postNum = $(this).attr("data-post")
 
@@ -126,6 +127,63 @@ $("#cateList .btnCateDel").on("click", function(){
 			}
 		});	
 	}
+});
+
+
+$("#btnAddCate").on("click", function(){
+	var cateName = $("[name=name]").val();
+	var description = $("[name=desc]").val();
+	
+	if (cateName.length <= 0) {
+		alert("카테고리명을 입력해주세요.")
+		
+		return false;
+	}
+	
+	
+	var map = {
+			id: "${authUser.id}",
+			cateName: cateName,
+			description: description
+	};
+	
+	$.ajax({	
+		url: "${pageContext.request.contextPath}/blog/${authUser.id}/admin/addCategory",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(map),
+		
+		dataType: "json",
+		success : function(cateNo){
+			if  (cateNo != -1) {
+				var no = cateNo;
+				
+				$("#cateList").prepend(
+						"<tr data-no='" + cateNo + "'>"
+					+ 		"<td>" + cateNo + "</td>" 
+					+		"<td>" + cateName + "</td>" 
+					+ 		"<td>0</td>" 
+					+ 		"<td>" + description + "</td>" 
+					+ 		"<td class='text-center'>"
+					+ 			"<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg' data-num='" + cateNo + "' data-post='0'>"
+					+ 		"</td>"
+					+	"</tr>"
+				);
+				
+				$("[name=name]").val("");
+				$("[name=desc]").val("");
+				
+				alert("추가되었습니다.");
+				
+			} else {
+				alert("오류");
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});	
+		
 });
 
 </script>

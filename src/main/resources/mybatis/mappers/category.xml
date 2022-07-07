@@ -3,10 +3,15 @@
 
 <mapper namespace="category">
 
-	<insert id="insertBlog" parameterType="String">
+	<insert id="insertCategory" parameterType="CateVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			SELECT seq_category_no.nextval 
+			FROM   dual
+		</selectKey>
+		
 		<![CDATA[
 			INSERT INTO category
-			VALUES (seq_category_no.nextval, #{id}, '미분류', '', sysdate)
+			VALUES (#{cateNo}, #{id}, #{cateName}, #{description}, sysdate)
 		]]>
 	</insert>
 	

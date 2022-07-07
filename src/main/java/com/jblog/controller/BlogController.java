@@ -105,6 +105,17 @@ public class BlogController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/{id}/admin/addCategory", method={RequestMethod.GET, RequestMethod.POST})
+	public int addCategory(@RequestBody CategoryVo cate) {
+		System.out.println("blog > admin > addCategory");
+		
+		int cateNo = bService.addCategory(cate);
+		
+		return cateNo;
+	}
+	
+	
 	@RequestMapping(value="/{id}/admin/writeForm", method={RequestMethod.GET, RequestMethod.POST})
 	public String adminWrite(@PathVariable("id") String id, Model model, HttpSession session) throws UnsupportedEncodingException {
 		System.out.println("blog > " + id + "> admin > write");

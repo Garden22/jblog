@@ -14,9 +14,9 @@ public class CategoryDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public int insertBlog(String id) {
+	public int insertCategory(CategoryVo cate) {
 		int count = -1;
-		count = sqlSession.insert("category.insertBlog", id);
+		count = sqlSession.insert("category.insertCategory", cate);
 		
 		return count;
 	}

@@ -7,6 +7,7 @@ import com.jblog.dao.BlogDao;
 import com.jblog.dao.CategoryDao;
 import com.jblog.dao.UserDao;
 import com.jblog.vo.BlogVo;
+import com.jblog.vo.CategoryVo;
 import com.jblog.vo.UserVo;
 
 @Service
@@ -31,7 +32,9 @@ public class UserService {
 			BlogVo newBlog = new BlogVo(user.getId(), user.getUserName()+"의 블로그입니다.", "/assets/images/spring-logo.jpg");
 			count = bDao.insertBlog(newBlog);
 			if (count > 0) System.out.println("[블로그 개설 성공]");
-			count = cDao.insertBlog(user.getId());
+			
+			CategoryVo cate = new CategoryVo(user.getId(), "미분류", "");
+			count = cDao.insertCategory(cate);
 			if (count > 0) System.out.println("[카테고리 생성 완료]");
 			
 		} else System.out.println("[회원가입 실패]");

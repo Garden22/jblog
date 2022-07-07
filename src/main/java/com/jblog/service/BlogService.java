@@ -14,6 +14,7 @@ import com.jblog.dao.BlogDao;
 import com.jblog.dao.CategoryDao;
 import com.jblog.dao.PostDao;
 import com.jblog.vo.BlogVo;
+import com.jblog.vo.CategoryVo;
 import com.jblog.vo.PostVo;
 
 @Service
@@ -25,6 +26,7 @@ public class BlogService {
 	private CategoryDao cDao;
 	@Autowired
 	private PostDao pDao;
+	
 	
 	public HashMap<String, Object> blogInfo(String id) {
 		HashMap<String, Object> map = new HashMap<>();
@@ -87,5 +89,19 @@ public class BlogService {
 		} else System.out.println("[카테고리 삭제 실패]");
 		
 		return result;
+	}
+	
+	
+	public int addCategory(CategoryVo cate) {
+		int cateNo = -1;
+		int count = cDao.insertCategory(cate);
+		
+		if (count > 0) {
+			System.out.println("[카테고리 추가 완료]");
+			cateNo = cate.getCateNo();
+			
+		} else System.out.println("[카테고리 추가 실패]");
+		
+		return cateNo;
 	}
 }
