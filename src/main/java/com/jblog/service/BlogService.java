@@ -31,7 +31,7 @@ public class BlogService {
 	
 	
 	public Map<String, Object> blogInfo(String id) {
-		HashMap<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
 		
@@ -40,7 +40,7 @@ public class BlogService {
 	
 	
 	public Map<String, Object> blogInfo(String id, Integer cateNo, Integer postNo) {
-		HashMap<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
