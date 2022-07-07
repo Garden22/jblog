@@ -12,6 +12,8 @@
 				<!-- 자신의 블로그일때만 관리 메뉴가 보인다. -->
 				<c:if test="${!empty(authUser) &&  authUser.id == bVo.id}">
 					<li><a class="btn_s" href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/basic">내블로그 관리</a></li>
+				</c:if>
+				<c:if test="${!empty(authUser)}">
 					<li><a class="btn_s" href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
 		 		</c:if>
 			</ul>

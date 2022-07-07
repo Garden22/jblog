@@ -5,10 +5,14 @@
 		<typeAliases>
 			<typeAlias alias="UserVo" type="com.jblog.vo.UserVo" />
 			<typeAlias alias="BlogVo" type="com.jblog.vo.BlogVo" />
+			<typeAlias alias="CateVo" type="com.jblog.vo.CategoryVo" />
+			<typeAlias alias="PostVo" type="com.jblog.vo.PostVo" />
 		</typeAliases>
 
 		<mappers>
 			<mapper resource="mybatis/mappers/user.xml" />
 			<mapper resource="mybatis/mappers/blog.xml" />
+			<mapper resource="mybatis/mappers/category.xml" />
+			<mapper resource="mybatis/mappers/post.xml" />
 		</mappers>
 	</configuration>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jblog.dao.BlogDao;
+import com.jblog.dao.CategoryDao;
 import com.jblog.dao.UserDao;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.UserVo;
@@ -13,9 +14,10 @@ public class UserService {
 	
 	@Autowired
 	private UserDao uDao;
-	
 	@Autowired
 	private BlogDao bDao;
+	@Autowired
+	private CategoryDao cDao;
 	
 	public String join(UserVo user) {
 		String result = "fail";
@@ -29,6 +31,8 @@ public class UserService {
 			BlogVo newBlog = new BlogVo(user.getId(), user.getUserName()+"의 블로그입니다.", "/assets/images/spring-logo.jpg");
 			count = bDao.insertBlog(newBlog);
 			if (count > 0) System.out.println("[블로그 개설 성공]");
+			count = cDao.insertBlog(user.getId());
+			if (count > 0) System.out.println("[카테고리 생성 완료]");
 			
 		} else System.out.println("[회원가입 실패]");
 				

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+	<insert id="insertBlog" parameterType="String">
+		<![CDATA[
+			INSERT INTO category
+			VALUES (seq_category_no.nextval, #{id}, '미분류', '', sysdate)
+		]]>
+	</insert>
+	
+	
+	<select id="selectCate" parameterType="String" resultType="CateVo">
+		<![CDATA[
+			SELECT c.cate_no cateNo
+			       ,c.cate_name cateName
+			       ,NVL(p.cnt, 0) postNum
+			       ,c.description description
+			FROM   category c, (SELECT cate_no, count(*) cnt
+			                    FROM   post
+			                    GROUP BY cate_no) p
+			WHERE  p.cate_no(+) = c.cate_no
+			AND    c.id = #{id}
+			ORDER BY c.cate_no DESC
+		]]>
+	</select>
+	
+	
+	<delete id="deleteCategory" parameterType="int">
+		<![CDATA[
+			DELETE category
+			WHERE  cate_no = #{cateNo}
+		]]>
+	</delete>
+</mapper>

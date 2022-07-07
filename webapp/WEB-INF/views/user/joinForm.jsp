@@ -33,7 +33,6 @@
 		      			<td><button id="btnIdCheck" type="button">아이디체크</button></td>
 		      		</tr>
 		      		<tr>
-		      			<td><input id="id-checked" type="hidden" name="idChecked" value=""></td>
 		      			<td id="tdMsg" colspan="2"></td>
 		      		</tr> 
 		      		<tr>
@@ -72,8 +71,10 @@
 
 <script type="text/javascript">
 
+var checked = ""
+
 $("#btnIdCheck").on("click", function(){
-	$("#id-checked").val("");
+	checked = "";
 	
 	if ($("#txtId").val().length <= 0) {
 		alert("아이디를 입력해주세요.")
@@ -90,6 +91,7 @@ function idcheck() {
 	$.ajax({	
 		url: "${pageContext.request.contextPath}/user/idcheck",
 		type : "post",
+		async: false,
 		contentType : "application/json",
 		data : JSON.stringify(test),
 		
@@ -101,7 +103,7 @@ function idcheck() {
 				
 			} else {
 				$("#tdMsg").text("사용할 수 있는 아이디입니다.");
-				$("#id-checked").val("true");
+				checked = id;
 			}			
 		},
 		error : function(XHR, status, error) {
@@ -117,7 +119,7 @@ $(btnJoin).on("click", function(){
 		alert("아이디를 입력해주세요.")
 		return false;
 		
-	} else if ($("#id-checked").val() != "true") {
+	} else if (checked != $("#txtId").val()) {
 		alert("아이디 중복확인을 해주세요.")
 		return false;
 		

@@ -31,13 +31,9 @@
 						<strong>카테고리</strong>
 					</div>
 					<ul id="cateList" class="text-left">
-						<li><a href="$}">카테고리5</a></li>
-						<li><a href="$}">카테고리4</a></li>
-						<li><a href="$}">카테고리3</a></li>
-						<li><a href="$}">카테고리2</a></li>
-						<li><a href="$}">카테고리1</a></li>
-						<li><a href="$}">미분류</a></li>
-						
+						<c:forEach items="${cList}" var="cate">
+							<li><a href="">${cate.cateName}</a></li>
+						</c:forEach>			
 					</ul>
 				</div>
 			</div>

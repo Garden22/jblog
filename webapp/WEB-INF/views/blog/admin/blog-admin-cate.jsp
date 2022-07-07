@@ -8,6 +8,7 @@
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 </head>
 
@@ -19,8 +20,8 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -46,25 +47,17 @@
 		      		</thead>
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<!-- 리스트 영역 -->
+		      			<c:forEach items="${cList}" var="category">
+			      			<tr data-no="${category.cateNo}">
+								<td>${category.cateNo}</td>
+								<td>${category.cateName}</td>
+								<td>${category.postNum}</td>
+								<td>${category.description}</td>
+							    <td class='text-center'>
+							    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-num="${category.cateNo}" data-post="${category.postNum}">
+							    </td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
       	
@@ -100,5 +93,41 @@
 	<!-- //wrap -->
 </body>
 
+<script type="text/javascript">
+
+$("#cateList .btnCateDel").on("click", function(){
+	var no = $(this).attr("data-num");
+	var postNum = $(this).attr("data-post")
+
+	if (postNum != 0) {
+		alert("삭제할 수 없습니다.")
+		
+		return false;
+		
+	} else {
+		var map = {cateNo: no};
+		$.ajax({	
+			url: "${pageContext.request.contextPath}/blog/${authUser.id}/admin/deleteCategory",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(map),
+			
+			dataType: "json",
+			success : function(result){
+				if  (result) {
+					$("[data-no=" + no + "]").remove();
+					alert("삭제되었습니다.")
+				} else {
+					alert("삭제를 실패했습니다.")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});	
+	}
+});
+
+</script>
 
 </html>
