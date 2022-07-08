@@ -43,15 +43,14 @@ public class BlogController {
 	
 	
 	@RequestMapping(value="/{id}/admin/basic", method={RequestMethod.GET, RequestMethod.POST})
-	public String adminBasic(@PathVariable("id") String id, Model model, HttpSession session) throws UnsupportedEncodingException {
+	public String adminBasic(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > basic");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if (authUser == null || !authUser.getId().equals(id)) {
-			id = URLEncoder.encode(id, "UTF-8");
 			
-			return "redirect:/blog/" + id;
+			return "/error/403";
 		}
 		
 		Map<String, Object> map = bService.blogInfo(id);
@@ -74,14 +73,13 @@ public class BlogController {
 	
 	
 	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
-	public String adminCategory(@PathVariable("id") String id, Model model, HttpSession session) throws UnsupportedEncodingException {
+	public String adminCategory(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > category");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if (authUser == null || !authUser.getId().equals(id)) {
-			id = URLEncoder.encode(id, "UTF-8");
 			
-			return "redirect:/blog/" + id;
+			return "/error/403";
 		}
 		
 		Map<String, Object> map = bService.blogInfo(id);
@@ -114,15 +112,14 @@ public class BlogController {
 	
 	
 	@RequestMapping(value="/{id}/admin/writeForm", method={RequestMethod.GET, RequestMethod.POST})
-	public String adminWrite(@PathVariable("id") String id, Model model, HttpSession session) throws UnsupportedEncodingException {
+	public String adminWrite(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > write");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
 		if (authUser == null || !authUser.getId().equals(id)) {
-			id = URLEncoder.encode(id, "UTF-8");
 			
-			return "redirect:/blog/" + id;
+			return "/error/403";
 		}
 		
 		Map<String, Object> map = bService.blogInfo(id);
