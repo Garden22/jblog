@@ -225,6 +225,9 @@ $("#btn-addcmt").on("click", function(){
 		success : function(newCmt){
 			if (newCmt != null) {
 				render(newCmt);
+				$("[name=cmtContent]").val("");
+			} else {
+				alert("오류가 발생했습니다");
 			}
 		},
 		error : function(XHR, status, error) {
@@ -261,7 +264,6 @@ $("#read-comments").on("click", ".delete-this", function(){
 	} else {
 		return;
 	}
-	
 });
 
 </script>
