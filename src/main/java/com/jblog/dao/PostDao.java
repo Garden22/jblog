@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jblog.vo.PagingVo;
 import com.jblog.vo.PostVo;
 
 @Repository
@@ -36,10 +37,17 @@ public class PostDao {
 	}
 	
 	
-	public List<PostVo> selectCatePost(int cateNo) {
-		List<PostVo> pList = sqlSession.selectList("post.selectCatePost", cateNo);
+	public List<PostVo> selectCatePost(PagingVo post) {
+		List<PostVo> pList = sqlSession.selectList("post.selectCatePost", post);
 		
 		return pList;
+	}
+	
+	
+	public int selectCnt(int cateNo) {
+		int cnt = sqlSession.selectOne("post.selectCnt", cateNo);
+		
+		return cnt;
 	}
 
 }

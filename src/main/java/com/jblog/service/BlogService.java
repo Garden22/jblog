@@ -17,6 +17,7 @@ import com.jblog.dao.CategoryDao;
 import com.jblog.dao.PostDao;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.PagingVo;
 import com.jblog.vo.PostVo;
 
 @Service
@@ -39,7 +40,7 @@ public class BlogService {
 	}
 	
 	
-	public Map<String, Object> blogInfo(String id, Integer cateNo, Integer postNo) {
+	public Map<String, Object> blogInfo(String id, Integer cateNo, Integer pageNo, Integer postNo) {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("bVo", bDao.selectBlog(id));
@@ -48,13 +49,20 @@ public class BlogService {
 		if (cateNo == null) cateNo = cDao.selectRecent(id);
 		map.put("cateName", cDao.selectName(cateNo));
 		
-		List<PostVo> pList = pDao.selectCatePost(cateNo);
+		if (pageNo == null) pageNo = 1;
+		List<PostVo> pList = pDao.selectCatePost(new PagingVo(cateNo, pageNo, 5));
 		map.put("pList", pList);
 		
-		if (pList.size() == 0) map.put("post", null);
+		if (pList.size() == 0) {
+			map.put("post", null);
+			map.put("paging", null);
+		}
 		else {
 			if (postNo == null) postNo = pDao.selectRecent(cateNo);
 			map.put("post", pDao.selectPost(postNo));
+			
+		    int totCnt = pDao.selectCnt(cateNo);
+			map.put("paging", new PagingVo(totCnt, pageNo));
 		}
 
 		return map;

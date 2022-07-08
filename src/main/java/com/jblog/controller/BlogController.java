@@ -31,11 +31,11 @@ public class BlogController {
 	@Autowired
 	private BlogService bService;
 	
-	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"}, method={RequestMethod.GET, RequestMethod.POST})
-	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, @PathVariable(required=false) Integer postNo, Model model) {
+	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}/{pageNo}", "/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"}, method={RequestMethod.GET, RequestMethod.POST})
+	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, @PathVariable(required=false) Integer postNo, @PathVariable(required=false) Integer pageNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
-		Map<String, Object> map = bService.blogInfo(id, cateNo, postNo);
+		Map<String, Object> map = bService.blogInfo(id, cateNo, pageNo, postNo);
 		model.addAllAttributes(map);
 						
 		return "/blog/blog-main";

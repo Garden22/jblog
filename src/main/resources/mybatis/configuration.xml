@@ -8,6 +8,7 @@
 			<typeAlias alias="CateVo" type="com.jblog.vo.CategoryVo" />
 			<typeAlias alias="PostVo" type="com.jblog.vo.PostVo" />
 			<typeAlias alias="CommVo" type="com.jblog.vo.CommentsVo" />
+			<typeAlias alias="PagingVo" type="com.jblog.vo.PagingVo" />
 		</typeAliases>
 
 		<mappers>

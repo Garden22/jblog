@@ -45,16 +45,35 @@
 	</select>
 	
 	
-	<select id="selectCatePost" parameterType="int" resultType="postVo">
+	<select id="selectCatePost" parameterType="PagingVo" resultType="PostVo">
 		<![CDATA[
-			SELECT p.post_no postNo
-			       ,c.cate_no cateNo
-			       ,p.post_title postTitle
-			       ,TO_CHAR(p.reg_date, 'YYYY/MM/DD') regDate
-			FROM   category c, post p
-			WHERE  c.cate_no = p.cate_no
-			AND    c.cate_no = #{cateNo}
-			ORDER BY p.post_no DESC
+			SELECT postNo
+			       ,cateNo
+			       ,postTitle
+			       ,regDate
+	        FROM (SELECT rownum rn, postNo, cateNo, postTitle, regDate
+	              FROM (SELECT rownum
+	                           ,p.post_no postNo
+				               ,c.cate_no cateNo
+				               ,p.post_title postTitle
+				               ,TO_CHAR(p.reg_date, 'YYYY/MM/DD') regDate
+	                    FROM   category c, post p
+	                    WHERE  c.cate_no = p.cate_no
+	                    AND    c.cate_no = #{cateNo}
+	                    ORDER BY p.post_no DESC)
+	             )
+	        WHERE  rn > (#{currPage} - 1) * #{lstCnt}
+	        AND    rn <= #{currPage} * #{lstCnt}
+        ]]>
+	</select>
+	
+	
+	<select id="selectCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM   post
+			WHERE  cate_no = #{cateNo}
 		]]>
 	</select>
+	
 </mapper>

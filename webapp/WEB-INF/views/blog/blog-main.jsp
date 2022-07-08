@@ -102,23 +102,45 @@
 					</div>
 				</c:if>
 				
-				<div id="list">
-					<div id="listTitle" class="text-left"><strong>${cateName}의 글</strong></div>
-					<table>
-						<colgroup>
-							<col style="">
-							<col style="width: 20%;">
-						</colgroup>
-						
-						<c:forEach items="${pList}" var="post">
-							<tr>
-								<td class="text-left"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}">${post.postTitle}</a></td>
-								<td class="text-right">${post.regDate}</td>
-							</tr>
-						</c:forEach>
-						
-					</table>
-				</div>
+				<c:if test="${!empty(post)}">
+					<div id="list">
+						<div id="listTitle" class="text-left"><strong>${cateName}의 글</strong></div>
+						<table>
+							<colgroup>
+								<col style="">
+								<col style="width: 20%;">
+							</colgroup>
+							
+							<c:forEach items="${pList}" var="post">
+								<tr>
+									<td class="text-left"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.currPage}">${post.postTitle}</a></td>
+									<td class="text-right">${post.regDate}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+					
+					<div id="paging">
+						<ul>
+							<c:if test="${paging.prev}">
+								<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.startBtn-1}">◀</a></li>
+							</c:if>
+							
+							<c:forEach begin="${paging.startBtn}" end="${paging.endBtn}" step="1" var="page">
+								<c:if test="${page == paging.currPage}">
+									<li class="active"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${page}">${page}</a></li>
+								</c:if>
+								<c:if test="${page != paging.currPage}">
+									<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${page}">${page}</a></li>
+								</c:if>
+							</c:forEach>
+							
+							<c:if test="${paging.next}">
+								<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.endBtn+1}">▶</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</c:if>
 				<!-- //list -->
 			</div>
 			<!-- //post_area -->
