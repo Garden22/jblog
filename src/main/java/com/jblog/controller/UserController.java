@@ -5,10 +5,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jblog.service.UserService;
@@ -52,8 +54,14 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/loginForm")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request, Model model) {
 		System.out.println("user > loginForm");
+		
+		String referer = (String) request.getHeader("REFERER");
+		int idx = referer.indexOf("jblog");
+		referer = referer.substring(idx + 5);
+		
+		model.addAttribute("address", referer);
 		
 		return "/user/loginForm";
 	}
@@ -71,13 +79,13 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/login", method={RequestMethod.POST})
-	public String login(@ModelAttribute UserVo login, HttpSession session) {
+	public String login(@ModelAttribute UserVo login, HttpSession session, @RequestParam("address") String address) {
 		System.out.println("user > login");
 		
 		UserVo authUser = uService.getAuthUser(login);
 		session.setAttribute("authUser", authUser);
-		
-		return "redirect:/";
+				
+		return "redirect:" + address;
 	}
 	
 	

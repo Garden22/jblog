@@ -54,7 +54,6 @@ public class BlogService {
 		if (pList.size() == 0) map.put("post", null);
 		else {
 			if (postNo == null) postNo = pDao.selectRecent(cateNo);
-			
 			map.put("post", pDao.selectPost(postNo));
 		}
 

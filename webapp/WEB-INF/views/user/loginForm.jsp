@@ -20,6 +20,7 @@
 		
 		<div id="loginForm">
 			<form id="login-form" method="post" action="${pageContext.request.contextPath}/user/login">
+				<input type="hidden" name="address" value="${address}">
 	      		<table>
 			      	<colgroup>
 						<col style="width: 100px;">

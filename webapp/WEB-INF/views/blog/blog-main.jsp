@@ -8,7 +8,9 @@
 <meta charset="UTF-8">
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
+
 </head>
 
 <body>
@@ -37,12 +39,12 @@
 					</ul>
 				</div>
 			</div>
-			<!-- profilecate_area -->
 			
+			<!-- profilecate_area -->
 			<div id="post_area">
 				<c:if test="${!empty(post)}">
 					<div id="postBox" class="clearfix">
-							<div id="postTitle" class="text-left"><strong>${post.postTitle}</strong></div>
+							<div id="postTitle" class="text-left" data-postNo="${post.postNo}"><strong>${post.postTitle}</strong></div>
 							<div id="postDate" class="text-left"><strong>${post.regDate}</strong></div>
 							<div id="postNick">${post.userName}(${post.id})님</div>
 					</div>
@@ -51,6 +53,40 @@
 					<div id="post" >
 						${post.postContent}
 					</div>
+					
+					<!--  comments area  -->
+						<div id="comments_area">
+							<!--  코멘트 작성  -->
+							<c:if test="${!empty(authUser)}">
+								<table id="write-comments" border="1">
+									<colgroup>
+										<col style="width: 100px">
+										<col style="width: 500px">
+										<col style="width: 100px">
+									</colgroup>
+									<tr>
+										<td><a id="userName" data-no="${authUser.userNo}">${authUser.userName}</a></td>
+										<td><input name="cmtContent" type="text" value=""></td>
+										<td><button id="btn-addcmt" type="button">저장</button></td>
+									</tr>
+								</table>
+							</c:if>
+							<!--  // 코멘트 작성  -->
+							
+							<!--  코멘트 읽기 -->
+							<table id="read-comments" border="1">
+								<colgroup>
+									<col style="width: 100px">
+									<col style="width: 450px">
+									<col style="width: 100px">
+									<col style="width: 50px">
+								</colgroup>
+							</table>
+							<!--  //코멘트 읽기 -->
+						</div>
+					<!--  ///comments area -->
+					
+					
 				</c:if>
 				<!-- //post -->
 				
@@ -98,5 +134,136 @@
 	
 	</div>
 	<!-- //wrap -->
+	
 </body>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var postNo = ${post.postNo}
+	
+	if (postNo != null) {
+		
+		var postVo = {
+			postNo: postNo		
+		}
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/comments/loadComment",
+			type : "post",
+			contentType : "application/json",
+			data: JSON.stringify(postVo),
+			
+			dataType: "json",
+			success : function(cmtList){
+				console.log(cmtList);
+				
+				for (var i = 0; i < cmtList.length; i++) {
+					render(cmtList[i]);
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	}
+});
+
+
+function render(cmtVo){
+	if ("${authUser.userNo}" == cmtVo.userNo) {
+		$("#read-comments").prepend(
+			  "<tr class='comment' name='del" + cmtVo.cmtNo + "'>"
+			+     "<td>" + cmtVo.userName + "</td>"
+			+     "<td>" + cmtVo.cmtContent + "</td>"
+			+     "<td>" + cmtVo.regDate + "</td>"
+			+     "<td class='delte-cmt'>"
+			+         "<a class='delete-this' data-cmtNo='" + cmtVo.cmtNo + "'>X</a>"
+			+     "</td>"
+			+ "</tr>"
+		)
+	} else {
+		$("#read-comments").prepend(
+				  "<tr class='comment'>"
+				+     "<td>" + cmtVo.userName + "</td>"
+				+     "<td>" + cmtVo.cmtContent + "</td>"
+				+     "<td>" + cmtVo.regDate + "</td>"
+				+     "<td></td>"
+				+ "</tr>"
+			)
+	}
+};
+
+
+$("#btn-addcmt").on("click", function(){
+	if ("${authUser}".length == 0) {
+		return false;
+    }
+	
+	var userNo = "${authUser.userNo}";
+	var content = $("[name=cmtContent]").val();
+	var postNo = $("#postTitle").attr("data-postNo");
+	
+	if (content == null || content == "") {
+		alert("댓글을 입력해주세요.")
+		return false;
+	}
+	
+	var cmtVo = {
+			userNo: userNo,
+			cmtContent: content,
+			postNo: postNo
+	}
+		
+	$.ajax({
+		url: "${pageContext.request.contextPath}/comments/addComment",
+		type : "post",
+		contentType : "application/json",
+		data: JSON.stringify(cmtVo),
+			
+		dataType: "json",
+		success : function(newCmt){
+			if (newCmt != null) {
+				render(newCmt);
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+});
+
+
+$("#read-comments").on("click", ".delete-this", function(){
+	var cmtNo = $(this).attr("data-cmtNo");
+	
+	if (confirm("삭제하시겠습니까?")) {		
+		var cmtVo = {
+				cmtNo: cmtNo
+		}
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/comments/deleteComment",
+			type : "post",
+			contentType : "application/json",
+			data: JSON.stringify(cmtVo),
+				
+			dataType: "json",
+			success : function(result){
+				if (result) {
+					$("[name = del" + cmtNo + "]").remove();
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	} else {
+		return;
+	}
+	
+});
+
+</script>
+
 </html>

@@ -5,6 +5,7 @@ public class CommentsVo {
 	private int cmtNo;
 	private int postNo;
 	private int userNo;
+	private String id;
 	private String userName;
 	private String cmtContent;
 	private String regDate;
@@ -68,6 +69,14 @@ public class CommentsVo {
 
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

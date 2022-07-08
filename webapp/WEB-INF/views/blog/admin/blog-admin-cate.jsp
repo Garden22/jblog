@@ -54,7 +54,7 @@
 								<td>${category.postNum}</td>
 								<td>${category.description}</td>
 							    <td class='text-center'>
-							    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-num="${category.cateNo}" data-post="${category.postNum}">
+							    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-num="${category.cateNo}" data-post="${category.postNum}" data-name="${category.cateName}">
 							    </td>
 							</tr>
 						</c:forEach>
@@ -96,17 +96,17 @@
 <script type="text/javascript">
 
 $("#cateList").on("click", ".btnCateDel", function() {
-	console.log("아얏")
 	var no = $(this).attr("data-num");
 	var postNum = $(this).attr("data-post")
-
-	if (postNum != 0) {
+    var cateName = $(this).attr("data-name")
+    
+	if (postNum != 0 || cateName == "미분류") {
 		alert("삭제할 수 없습니다.")
 		
 		return false;
-		
 	} else {
 		var map = {cateNo: no};
+		
 		$.ajax({	
 			url: "${pageContext.request.contextPath}/blog/${authUser.id}/admin/deleteCategory",
 			type : "post",
