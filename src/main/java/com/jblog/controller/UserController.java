@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,7 +31,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value="/join", method={RequestMethod.POST})
+	@PostMapping("/join")
 	public String join(@ModelAttribute UserVo user) {
 		System.out.println("user > join");
 		
@@ -43,7 +43,7 @@ public class UserController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/idcheck", method={RequestMethod.POST})
+	@PostMapping("/idcheck")
 	public boolean idCheck(@RequestBody UserVo test) {
 		System.out.println("user > idcheck");
 		
@@ -68,7 +68,7 @@ public class UserController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/logincheck", method={RequestMethod.POST})
+	@PostMapping("/logincheck")
 	public boolean loginCheck(@RequestBody UserVo login) {
 		System.out.println("user > logincheck");
 		
@@ -78,7 +78,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value="/login", method={RequestMethod.POST})
+	@PostMapping(value="/login")
 	public String login(@ModelAttribute UserVo login, HttpSession session, @RequestParam("address") String address) {
 		System.out.println("user > login");
 		

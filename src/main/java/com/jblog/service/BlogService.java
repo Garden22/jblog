@@ -53,7 +53,7 @@ public class BlogService {
 		List<PostVo> pList = pDao.selectCatePost(new PagingVo(cateNo, pageNo, 5));
 		map.put("pList", pList);
 		
-		if (pList.size() == 0) {
+		if (pList.isEmpty()) {
 			map.put("post", null);
 			map.put("paging", null);
 		}

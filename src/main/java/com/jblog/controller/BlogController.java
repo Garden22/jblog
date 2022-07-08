@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +30,7 @@ public class BlogController {
 	@Autowired
 	private BlogService bService;
 	
-	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}/{pageNo}", "/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"}, method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}/{pageNo}", "/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"})
 	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, @PathVariable(required=false) Integer postNo, @PathVariable(required=false) Integer pageNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
@@ -42,7 +41,7 @@ public class BlogController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/admin/basic", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/basic")
 	public String adminBasic(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > basic");
 		
@@ -60,7 +59,7 @@ public class BlogController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/basicChange", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/basicChange")
 	public String basicChange(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("blogTitle") String title) throws UnsupportedEncodingException {
 		System.out.println("blog > " + id + "> admin > basicChange");
 
@@ -72,7 +71,7 @@ public class BlogController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/admin/category", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/category")
 	public String adminCategory(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > category");
 		
@@ -90,7 +89,7 @@ public class BlogController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/{id}/admin/deleteCategory", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/deleteCategory")
 	public boolean deleteCategory(@RequestBody PostVo post) {
 		System.out.println("blog > admin > deleteCategory");
 		
@@ -101,7 +100,7 @@ public class BlogController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/{id}/admin/addCategory", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/addCategory")
 	public int addCategory(@RequestBody CategoryVo cate) {
 		System.out.println("blog > admin > addCategory");
 		
@@ -111,7 +110,7 @@ public class BlogController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/admin/writeForm", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/writeForm")
 	public String adminWrite(@PathVariable("id") String id, Model model, HttpSession session) {
 		System.out.println("blog > " + id + "> admin > write");
 		
@@ -129,7 +128,7 @@ public class BlogController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/admin/write", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/{id}/admin/write")
 	public String writePost(@PathVariable("id") String id, @ModelAttribute PostVo post) throws UnsupportedEncodingException {
 		System.out.println("blog > write");
 		

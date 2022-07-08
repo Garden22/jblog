@@ -105,14 +105,6 @@ DROP SEQUENCE seq_comments_no;
 
 
 
-update blog
-set logo_file = '/upload/assets/images/spring-logo.jpg'
-where id = '테스트';
-
-INSERT INTO category
-VALUES (seq_category_no.nextval, '테스트5', '미분류', '', sysdate);
-
-
 COMMIT;
 
 ROLLBACK;
