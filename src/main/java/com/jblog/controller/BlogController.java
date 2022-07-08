@@ -37,6 +37,7 @@ public class BlogController {
 		Map<String, Object> map = bService.blogInfo(id, cateNo, pageNo, postNo);
 		model.addAllAttributes(map);
 						
+		
 		return "/blog/blog-main";
 	}
 	
