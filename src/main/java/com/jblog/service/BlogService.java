@@ -41,6 +41,7 @@ public class BlogService {
 	
 	
 	public Map<String, Object> blogInfo(PostVo post) {
+		
 		int postNo = post.getPostNo();
 		int cateNo = post.getCateNo();
 		int pageNo = post.getPageNo();
@@ -49,7 +50,6 @@ public class BlogService {
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("bVo", bDao.selectBlog(id));
-
 		map.put("cList", cDao.selectCate(id));
 
 		if (cateNo == 0) cateNo = cDao.selectRecent(id);
@@ -62,6 +62,7 @@ public class BlogService {
 		if (pList.isEmpty()) {
 			map.put("post", null);
 			map.put("paging", null);
+			
 		} else {
 			if (postNo == 0) postNo = pDao.selectRecent(cateNo);
 			map.put("post", pDao.selectPost(postNo));
@@ -70,7 +71,6 @@ public class BlogService {
 			map.put("paging", new PagingVo(totCnt, pageNo));
 		}
 
-		System.out.println("page " + " postNo " + postNo + " pageNo " + pageNo + " caeNO " + cateNo + " id " + id);
 		return map;
 	}
 	
@@ -99,12 +99,11 @@ public class BlogService {
 			bVo.setLogoFile("/upload/"+saveName);
 		}
 		
-		if (title.length() != 0 ) bVo.setBlogTitle(title);
+		if (title.length() != 0) bVo.setBlogTitle(title);
 		int count = bDao.updateBasic(bVo);
 		
 		if (count > 0) System.out.println("[업데이트가 완료되었습니다.]");
 		else System.out.println("[업데이트가 실패했습니다.]");
-		
 	}
 	
 	

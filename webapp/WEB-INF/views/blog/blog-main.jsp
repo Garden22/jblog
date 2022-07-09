@@ -153,7 +153,7 @@
 							</c:forEach>
 							
 							<c:if test="${paging.next}">
-								<li><a class="page-a" data-page="${pagin.endBtn+1}">▶</a></li>
+								<li><a class="page-a" data-page="${paging.endBtn+1}">▶</a></li>
 							</c:if>
 						</ul>
 					</div>
