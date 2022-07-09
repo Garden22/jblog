@@ -111,9 +111,9 @@
 					<div id="list">
 						<div id="listTitle" class="text-left"><strong>${cateName}의 글</strong></div>
 						
-						<form id="postForm" action="${pageContext.request.contextPath}/blog/${bVo.id}" method="POST">
+						<form id="postForm" action="" method="POST">
 								<input id="post-cateNo" type="hidden" name="cateNo" value="${post.cateNo}">
-								<input id="post-postNo" type="hidden" name="postNo" value="">
+								<input id="pageNo" type="hidden" name="pageNo" value="${paging.currPage}">								
 						</form>
 						
 						<table>
@@ -132,9 +132,8 @@
 					</div>
 					
 					<div id="paging">
-						<form id="pageForm" action="${pageContext.request.contextPath}/blog/${bVo.id}" method="POST">
+						<form id="pageForm" action="${pageContext.request.contextPath}/blog/${bVo.id}/${post.postNo}" method="POST">
 							<input id="page-cateNo" type="hidden" name="cateNo" value="${post.cateNo}">
-							<input id="page-postNo" type="hidden" name="postNo" value="${post.postNo}">
 							<input id="page-pageNo" type="hidden" name="pageNo" value="">
 						</form>
 						
@@ -316,7 +315,7 @@ $(".cate-a").on("click", function(){
 
 $(".post-a").on("click", function(){
 	var postNo = $(this).attr("data-postNo");
-	$("#post-postNo").val(postNo);
+	$("#postForm").attr("action", "${pageContext.request.contextPath}/blog/${bVo.id}/" + postNo);
 	
 	$("#postForm").submit();
 });

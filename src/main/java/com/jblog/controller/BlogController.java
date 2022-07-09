@@ -30,8 +30,8 @@ public class BlogController {
 	@Autowired
 	private BlogService bService;
 	
-	@RequestMapping("/{id}")
-	public String main(@PathVariable("id") String id, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer postNo, @RequestParam(required=false) Integer pageNo, Model model) {
+	@RequestMapping({"/{id}/{postNo}", "/{id}"})
+	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer postNo, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer pageNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
 		Map<String, Object> map = bService.blogInfo(new PostVo(postNo, cateNo, pageNo, id));
@@ -39,8 +39,7 @@ public class BlogController {
 		
 		return "/blog/blog-main";
 	}
-	
-	
+
 	
 	@RequestMapping("/{id}/admin/basic")
 	public String adminBasic(@PathVariable("id") String id, Model model, HttpSession session) {

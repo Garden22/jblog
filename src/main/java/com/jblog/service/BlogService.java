@@ -41,7 +41,7 @@ public class BlogService {
 	
 	
 	public Map<String, Object> blogInfo(PostVo post) {
-		
+		System.out.println(post.toString());
 		int postNo = post.getPostNo();
 		int cateNo = post.getCateNo();
 		int pageNo = post.getPageNo();
