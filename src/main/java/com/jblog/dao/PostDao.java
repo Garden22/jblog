@@ -16,38 +16,27 @@ public class PostDao {
 	private SqlSession sqlSession;
 	
 	public int insertPost(PostVo post) {
-		int count = -1;
-		count = sqlSession.insert("post.insertPost", post);
-		
-		return count;
+		return sqlSession.insert("post.insertPost", post);
 	}
 	
 	
-	public int selectRecent(int cateNo) {
-		int postNo = sqlSession.selectOne("post.selectRecent", cateNo);
-		
-		return postNo;
+	public Integer selectRecent(int cateNo) {
+		return sqlSession.selectOne("post.selectRecent", cateNo);
 	}
 	
 	
 	public PostVo selectPost(int postNo) {
-		PostVo post = sqlSession.selectOne("post.selectPost", postNo);
-		
-		return post;
+		return sqlSession.selectOne("post.selectPost", postNo);
 	}
 	
 	
 	public List<PostVo> selectCatePost(PagingVo post) {
-		List<PostVo> pList = sqlSession.selectList("post.selectCatePost", post);
-		
-		return pList;
+		return sqlSession.selectList("post.selectCatePost", post);
 	}
 	
 	
 	public int selectCnt(int cateNo) {
-		int cnt = sqlSession.selectOne("post.selectCnt", cateNo);
-		
-		return cnt;
+		return sqlSession.selectOne("post.selectCnt", cateNo);
 	}
 
 }

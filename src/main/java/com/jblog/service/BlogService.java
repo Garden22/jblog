@@ -40,31 +40,37 @@ public class BlogService {
 	}
 	
 	
-	public Map<String, Object> blogInfo(String id, Integer cateNo, Integer pageNo, Integer postNo) {
+	public Map<String, Object> blogInfo(PostVo post) {
+		int postNo = post.getPostNo();
+		int cateNo = post.getCateNo();
+		int pageNo = post.getPageNo();
+		String id = post.getId();
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("bVo", bDao.selectBlog(id));
+
 		map.put("cList", cDao.selectCate(id));
-		
-		if (cateNo == null) cateNo = cDao.selectRecent(id);
+
+		if (cateNo == 0) cateNo = cDao.selectRecent(id);
 		map.put("cateName", cDao.selectName(cateNo));
-		
-		if (pageNo == null) pageNo = 1;
+
+		if (pageNo == 0) pageNo = 1;
 		List<PostVo> pList = pDao.selectCatePost(new PagingVo(cateNo, pageNo, 5));
 		map.put("pList", pList);
-		
+				
 		if (pList.isEmpty()) {
 			map.put("post", null);
 			map.put("paging", null);
-		}
-		else {
-			if (postNo == null) postNo = pDao.selectRecent(cateNo);
+		} else {
+			if (postNo == 0) postNo = pDao.selectRecent(cateNo);
 			map.put("post", pDao.selectPost(postNo));
 			
 		    int totCnt = pDao.selectCnt(cateNo);
 			map.put("paging", new PagingVo(totCnt, pageNo));
 		}
 
+		System.out.println("page " + " postNo " + postNo + " pageNo " + pageNo + " caeNO " + cateNo + " id " + id);
 		return map;
 	}
 	

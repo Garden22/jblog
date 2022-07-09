@@ -30,15 +30,16 @@ public class BlogController {
 	@Autowired
 	private BlogService bService;
 	
-	@RequestMapping(value = {"/{id}/{cateNo}/{postNo}/{pageNo}", "/{id}/{cateNo}/{postNo}", "/{id}/{cateNo}", "/{id}"})
-	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer cateNo, @PathVariable(required=false) Integer postNo, @PathVariable(required=false) Integer pageNo, Model model) {
+	@RequestMapping("/{id}")
+	public String main(@PathVariable("id") String id, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer postNo, @RequestParam(required=false) Integer pageNo, Model model) {
 		System.out.println("blog > " + id + " > main");
 		
-		Map<String, Object> map = bService.blogInfo(id, cateNo, pageNo, postNo);
+		Map<String, Object> map = bService.blogInfo(new PostVo(postNo, cateNo, pageNo, id));
 		model.addAllAttributes(map);
-								
+		
 		return "/blog/blog-main";
 	}
+	
 	
 	
 	@RequestMapping("/{id}/admin/basic")

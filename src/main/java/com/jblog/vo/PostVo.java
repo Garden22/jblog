@@ -4,6 +4,7 @@ public class PostVo {
 
 	private int postNo;
 	private int cateNo;
+	private int pageNo;
 	private String id;
 	private String userName;
 	private String cateName;
@@ -14,7 +15,18 @@ public class PostVo {
 	public PostVo() {
 		
 	}
-	
+		
+	public PostVo(Integer postNo, Integer cateNo, Integer pageNo, String id) {
+		if (pageNo == null) pageNo = 0;
+		if (cateNo == null) cateNo = 0;
+		if (postNo == null) postNo = 0;
+		
+		this.postNo = postNo;
+		this.cateNo = cateNo;
+		this.pageNo = pageNo;
+		this.id = id;
+	}
+
 	public PostVo(int postNo, int cateNo, String cateName, String postTitle, String postContent, String regDate) {
 		this.postNo = postNo;
 		this.cateNo = cateNo;
@@ -87,11 +99,20 @@ public class PostVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public int getPageNo() {
+		return pageNo;
+	}
 
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+	
 	@Override
 	public String toString() {
-		return "PostVo [postNo=" + postNo + ", cateNo=" + cateNo + ", cateName=" + cateName + ", postTitle=" + postTitle
-				+ ", postContent=" + postContent + ", regDate=" + regDate + "]";
+		return "PostVo [postNo=" + postNo + ", cateNo=" + cateNo + ", pageNo=" + pageNo + ", id=" + id + ", userName="
+				+ userName + ", cateName=" + cateName + ", postTitle=" + postTitle + ", postContent=" + postContent
+				+ ", regDate=" + regDate + "]";
 	}
 	
 }

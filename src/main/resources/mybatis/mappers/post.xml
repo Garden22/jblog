@@ -30,17 +30,17 @@
 	</select>
 	
 	
-	<select id="selectRecent" parameterType="int" resultType="int">
+	<select id="selectRecent" parameterType="int" resultType="integer">
 		<![CDATA[
-			SELECT p.post_no postNo
-			FROM   post p, (SELECT ROWNUM, c.cate_no cateNo
-			                FROM   users u, category c
-			                WHERE  u.id = c.id
-			                AND    c.cate_no = #{cateNo}
-			                ORDER BY c.cate_no DESC
-			                ) c
-	        WHERE  p.cate_no = c.cateNo
-	        AND    ROWNUM = 1
+			SELECT postNo
+			FROM   (SELECT ROWNUM, c.cate_no, p.post_no postNo
+	                FROM   users u, category c, post p
+	                WHERE  u.id = c.id
+	                AND    p.cate_no = c.cate_no
+	                AND    c.cate_no = #{cateNo}
+	                ORDER BY c.cate_no DESC
+	                ) c
+	        WHERE  ROWNUM = 1
 		]]>
 	</select>
 	

@@ -32,16 +32,21 @@
 					<div class="text-left">
 						<strong>카테고리</strong>
 					</div>
+					
+					<form id="cateForm" action="${pageContext.request.contextPath}/blog/${bVo.id}" method="POST">
+						<input id="cateNo" type="hidden" name="cateNo" value="">
+					</form>
+					
 					<ul id="cateList" class="text-left">
 						<c:forEach items="${cList}" var="cate">
-							<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${cate.cateNo}">${cate.cateName} (${cate.postNum})</a></li>
+							<li><a class="cate-a" data-cateNo="${cate.cateNo}">${cate.cateName} (${cate.postNum})</a></li>
 						</c:forEach>			
 					</ul>
 				</div>
 			</div>
 			
 			<!-- profilecate_area -->
-			<div id="post_area">
+			<div id="post_area">				
 				<c:if test="${!empty(post)}">
 					<div id="postBox" class="clearfix">
 							<div id="postTitle" class="text-left" data-postNo="${post.postNo}"><strong>${post.postTitle}</strong></div>
@@ -105,15 +110,21 @@
 				<c:if test="${!empty(post)}">
 					<div id="list">
 						<div id="listTitle" class="text-left"><strong>${cateName}의 글</strong></div>
+						
+						<form id="postForm" action="${pageContext.request.contextPath}/blog/${bVo.id}" method="POST">
+								<input id="post-cateNo" type="hidden" name="cateNo" value="${post.cateNo}">
+								<input id="post-postNo" type="hidden" name="postNo" value="">
+						</form>
+						
 						<table>
 							<colgroup>
 								<col style="">
 								<col style="width: 20%;">
 							</colgroup>
-							
+														
 							<c:forEach items="${pList}" var="post">
 								<tr>
-									<td class="text-left"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.currPage}">${post.postTitle}</a></td>
+									<td class="text-left"><a class="post-a" data-postNo="${post.postNo}">${post.postTitle}</a></td>
 									<td class="text-right">${post.regDate}</td>
 								</tr>
 							</c:forEach>
@@ -121,22 +132,28 @@
 					</div>
 					
 					<div id="paging">
+						<form id="pageForm" action="${pageContext.request.contextPath}/blog/${bVo.id}" method="POST">
+							<input id="page-cateNo" type="hidden" name="cateNo" value="${post.cateNo}">
+							<input id="page-postNo" type="hidden" name="postNo" value="${post.postNo}">
+							<input id="page-pageNo" type="hidden" name="pageNo" value="">
+						</form>
+						
 						<ul>
 							<c:if test="${paging.prev}">
-								<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.startBtn-1}">◀</a></li>
+								<li><a class="page-a" data-page="${paging.startBtn-1}">◀</a></li>
 							</c:if>
 							
 							<c:forEach begin="${paging.startBtn}" end="${paging.endBtn}" step="1" var="page">
 								<c:if test="${page == paging.currPage}">
-									<li class="active"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${page}">${page}</a></li>
+									<li class="active"><a class="page-a" data-page="${page}">${page}</a></li>
 								</c:if>
 								<c:if test="${page != paging.currPage}">
-									<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${page}">${page}</a></li>
+									<li><a class="page-a" data-page="${page}">${page}</a></li>
 								</c:if>
 							</c:forEach>
 							
 							<c:if test="${paging.next}">
-								<li><a href="${pageContext.request.contextPath}/blog/${bVo.id}/${post.cateNo}/${post.postNo}/${paging.endBtn+1}">▶</a></li>
+								<li><a class="page-a" data-page="${pagin.endBtn+1}">▶</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -162,9 +179,9 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	var postNo = ${post.postNo}
+	var postNo = "${post.postNo}";
 	
-	if (postNo != null) {
+	if (postNo != "") {
 		
 		var postVo = {
 			postNo: postNo		
@@ -286,6 +303,30 @@ $("#read-comments").on("click", ".delete-this", function(){
 	} else {
 		return;
 	}
+});
+
+
+$(".cate-a").on("click", function(){
+	var cateNo = $(this).attr("data-cateNo");
+	$("#cateNo").val(cateNo);
+	
+	$("#cateForm").submit();
+});
+
+
+$(".post-a").on("click", function(){
+	var postNo = $(this).attr("data-postNo");
+	$("#post-postNo").val(postNo);
+	
+	$("#postForm").submit();
+});
+
+
+$(".page-a").on("click", function(){
+	var pageNo = $(this).attr("data-page");
+	$("#page-pageNo").val(pageNo);
+	
+	$("#pageForm").submit();
 });
 
 </script>
