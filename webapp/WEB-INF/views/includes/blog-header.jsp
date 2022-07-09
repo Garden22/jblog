@@ -5,7 +5,11 @@
 			<h1><a href="${pageContext.request.contextPath}/blog/${bVo.id}">${bVo.blogTitle}</a></h1>
 			<ul class="clearfix">
 				<c:if test="${empty(authUser)}">
-					<li><a class="btn_s" href="${pageContext.request.contextPath}/user/loginForm">로그인</a></li>
+					<form id="loginForm" action="${pageContext.request.contextPath}/user/loginForm" method="POST">
+						<input type="hidden" id="login-cate" name="cateNo" value="${post.cateNo}">
+						<input type="hidden" id="login-page" name="pageNo" value="${paging.currPage}">
+					</form>
+					<li><a class="btn_s">로그인</a></li>
 				</c:if>
 				
 				<!-- 로그인 후 메뉴 -->

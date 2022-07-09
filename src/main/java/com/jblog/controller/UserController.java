@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jblog.service.UserService;
+import com.jblog.vo.PostVo;
 import com.jblog.vo.UserVo;
 
 @RequestMapping("/user")
@@ -54,7 +55,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value="/loginForm")
-	public String loginForm(HttpServletRequest request, Model model) {
+	public String loginForm(@ModelAttribute PostVo post, HttpServletRequest request, Model model) {
 		System.out.println("user > loginForm");
 		
 		String referer = (String) request.getHeader("REFERER");
@@ -62,6 +63,7 @@ public class UserController {
 		referer = referer.substring(idx + 5);
 		
 		model.addAttribute("address", referer);
+		model.addAttribute("post", post);
 		
 		return "/user/loginForm";
 	}
@@ -79,11 +81,14 @@ public class UserController {
 	
 	
 	@PostMapping(value="/login")
-	public String login(@ModelAttribute UserVo login, HttpSession session, @RequestParam("address") String address) {
+	public String login(@ModelAttribute UserVo login, HttpSession session, @RequestParam("address") String address, @RequestParam("cateNo") int cateNo, @RequestParam("pageNo") String pageNo, Model model) {
 		System.out.println("user > login");
 		
 		UserVo authUser = uService.getAuthUser(login);
 		session.setAttribute("authUser", authUser);
+		
+		model.addAttribute("cateNo", cateNo);
+		model.addAttribute("pageNo", pageNo);
 				
 		return "redirect:" + address;
 	}

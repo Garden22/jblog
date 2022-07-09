@@ -328,6 +328,11 @@ $(".page-a").on("click", function(){
 	$("#pageForm").submit();
 });
 
+
+$(".btn_s").on("click", function(){
+	$("#loginForm").submit();
+})
+
 </script>
 
 </html>

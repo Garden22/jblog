@@ -21,6 +21,9 @@
 		<div id="loginForm">
 			<form id="login-form" method="post" action="${pageContext.request.contextPath}/user/login">
 				<input type="hidden" name="address" value="${address}">
+				<input type="hidden" name="cateNo" value="${post.cateNo}">
+				<input type="hidden" name="pageNo" value="${page.pageNo}">
+				
 	      		<table>
 			      	<colgroup>
 						<col style="width: 100px;">

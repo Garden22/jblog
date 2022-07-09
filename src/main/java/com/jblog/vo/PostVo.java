@@ -40,7 +40,9 @@ public class PostVo {
 		return postNo;
 	}
 
-	public void setPostNo(int postNo) {
+	public void setPostNo(Integer postNo) {
+		if (postNo == null) postNo = 0;
+
 		this.postNo = postNo;
 	}
 
@@ -48,7 +50,9 @@ public class PostVo {
 		return cateNo;
 	}
 
-	public void setCateNo(int cateNo) {
+	public void setCateNo(Integer cateNo) {
+		if (cateNo == null) cateNo = 0;
+
 		this.cateNo = cateNo;
 	}
 
@@ -104,9 +108,13 @@ public class PostVo {
 		return pageNo;
 	}
 
-	public void setPageNo(int pageNo) {
+	public void setPageNo(Integer pageNo) {
+		if (pageNo == null) pageNo = 0;
+		
 		this.pageNo = pageNo;
 	}
+	
+	
 	
 	@Override
 	public String toString() {
