@@ -42,8 +42,8 @@ public class BlogService {
 	
 	public Map<String, Object> blogInfo(PostVo post) {
 		System.out.println(post.toString());
-		int postNo = post.getPostNo();
-		int cateNo = post.getCateNo();
+		Integer postNo = post.getPostNo();
+		Integer cateNo = post.getCateNo();
 		int pageNo = post.getPageNo();
 		String id = post.getId();
 		
@@ -51,6 +51,18 @@ public class BlogService {
 		
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
+		
+		if (cateNo == 0 && pageNo == 0 && postNo != 0) {
+			cateNo = pDao.selectFromPost(new PostVo(postNo, id));
+			
+			if (cateNo == null) {
+				map.put("error", "error");
+				
+				return map;
+			}
+			int temp = pDao.selectTemp(new PostVo(postNo, cateNo));
+			pageNo = (temp - 1) / 5 + 1;
+		}
 
 		if (cateNo == 0) cateNo = cDao.selectRecent(id);
 		map.put("cateName", cDao.selectName(cateNo));

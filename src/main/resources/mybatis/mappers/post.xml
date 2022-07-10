@@ -38,7 +38,7 @@
 	                WHERE  u.id = c.id
 	                AND    p.cate_no = c.cate_no
 	                AND    c.cate_no = #{cateNo}
-	                ORDER BY c.cate_no DESC
+	                ORDER BY p.post_no DESC
 	                ) c
 	        WHERE  ROWNUM = 1
 		]]>
@@ -73,6 +73,29 @@
 			SELECT COUNT(*)
 			FROM   post
 			WHERE  cate_no = #{cateNo}
+		]]>
+	</select>
+	
+	
+	<select id="selectFromPost" parameterType="PostVo" resultType="integer">
+		<![CDATA[
+			SELECT c.cate_no cateNo
+			FROM   post p, category c
+			WHERE  p.cate_no = c.cate_no
+			AND    c.id = #{id}
+			AND    p.post_no = #{postNo}
+		]]>
+	</select>
+	
+	
+	<select id="selectTemp" parameterType="PostVo" resultType="int">
+		<![CDATA[
+			SELECT rn
+			FROM   (SELECT ROWNUM rn, post_no
+			        FROM   post
+			        WHERE  cate_no = #{cateNo}
+			        ORDER BY post_no DESC)
+			WHERE  post_no = #{postNo}
 		]]>
 	</select>
 	

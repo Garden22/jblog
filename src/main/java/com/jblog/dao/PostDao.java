@@ -35,8 +35,16 @@ public class PostDao {
 	}
 	
 	
-	public int selectCnt(int cateNo) {
+	public Integer selectCnt(int cateNo) {
 		return sqlSession.selectOne("post.selectCnt", cateNo);
 	}
-
+	
+	public Integer selectFromPost(PostVo post) {
+		return sqlSession.selectOne("post.selectFromPost", post);
+	}
+	
+	public int selectTemp(PostVo post) {
+		return sqlSession.selectOne("post.selectTemp", post);
+	}
+	
 }

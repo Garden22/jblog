@@ -49,7 +49,7 @@
 		      			<!-- 리스트 영역 -->
 		      			<c:forEach items="${cList}" var="category">
 			      			<tr data-no="${category.cateNo}">
-								<td>${category.cateNo}</td>
+								<td data-rn="${category.rowNum}">${category.rowNum}</td>
 								<td>${category.cateName}</td>
 								<td>${category.postNum}</td>
 								<td>${category.description}</td>

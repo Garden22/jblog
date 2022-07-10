@@ -15,6 +15,16 @@ public class PostVo {
 	public PostVo() {
 		
 	}
+	
+	public PostVo(int postNo, String id) {
+		this.postNo = postNo;
+		this.id = id;
+	}
+	
+	public PostVo(int postNo, int cateNo) {
+		this.postNo = postNo;
+		this.cateNo = cateNo;
+	}
 		
 	public PostVo(Integer postNo, Integer cateNo, Integer pageNo, String id) {
 		if (pageNo == null) pageNo = 0;
@@ -113,8 +123,6 @@ public class PostVo {
 		
 		this.pageNo = pageNo;
 	}
-	
-	
 	
 	@Override
 	public String toString() {

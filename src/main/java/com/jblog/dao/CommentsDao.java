@@ -16,31 +16,22 @@ public class CommentsDao {
 	
 	
 	public List<CommentsVo> selectComment(int postNo) {
-		List<CommentsVo> cmtList = sqlSession.selectList("comments.selectComment", postNo);
-		
-		return cmtList;
+		return sqlSession.selectList("comments.selectComment", postNo);
 	}
 	
 	
 	public CommentsVo selectRecent(int cmtNo) {
-		CommentsVo cmt = sqlSession.selectOne("comments.selectRecent", cmtNo);
-		
-		return cmt;
+		return sqlSession.selectOne("comments.selectRecent", cmtNo);
 	}
 	
 	
 	public int insertComment(CommentsVo cmt) {
-		int count = -1;
-		count = sqlSession.insert("comments.insertComment", cmt);
-		
-		return count;
+		return sqlSession.insert("comments.insertComment", cmt);
 	}
 	
 	
 	public int deleteComment(int cmtNo) {
-		int count = -1;
-		count = sqlSession.delete("comments.deleteComment", cmtNo);
-		
-		return count;
+		return sqlSession.delete("comments.deleteComment", cmtNo);
 	}
+	
 }

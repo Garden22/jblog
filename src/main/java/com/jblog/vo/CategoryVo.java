@@ -8,6 +8,7 @@ public class CategoryVo {
 	private String description;
 	private String regDate;
 	private int postNum;
+	private int rowNum;
 	
 	public CategoryVo() {
 		
@@ -73,6 +74,14 @@ public class CategoryVo {
 
 	public void setPostNum(int postNum) {
 		this.postNum = postNum;
+	}
+	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
 	}
 
 	@Override

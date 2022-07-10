@@ -18,7 +18,8 @@
 	
 	<select id="selectCate" parameterType="String" resultType="CateVo">
 		<![CDATA[
-			SELECT c.cate_no cateNo
+			SELECT ROWNUM
+			       ,c.cate_no cateNo
 			       ,c.cate_name cateName
 			       ,NVL(p.cnt, 0) postNum
 			       ,c.description description

@@ -15,16 +15,12 @@ public class SearchDao {
 	private SqlSession sqlSession;
 	
 	public List<BlogVo> selectByTitle(String keyword) {
-		List<BlogVo> bList = sqlSession.selectList("blog.selectByTitle", keyword);
-		
-		return bList;
+		return sqlSession.selectList("blog.selectByTitle", keyword);
 	}
 	
 	
 	public List<BlogVo> selectByName(String keyword) {
-		List<BlogVo> bList = sqlSession.selectList("blog.selectByName", keyword);
-		
-		return bList;
+		return sqlSession.selectList("blog.selectByName", keyword);
 	}
 	
 }

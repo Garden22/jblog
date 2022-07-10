@@ -15,38 +15,27 @@ public class CategoryDao {
 	private SqlSession sqlSession;
 	
 	public int insertCategory(CategoryVo cate) {
-		int count = -1;
-		count = sqlSession.insert("category.insertCategory", cate);
-		
-		return count;
+		return sqlSession.insert("category.insertCategory", cate);
 	}
 	
 	
 	public List<CategoryVo> selectCate(String id) {
-		List<CategoryVo> cList = sqlSession.selectList("category.selectCate", id);
-		
-		return cList;
+		return sqlSession.selectList("category.selectCate", id);
+
 	}
 	
 	
 	public int deleteCategory(int cateNo) {
-		int count = -1;
-		count = sqlSession.delete("category.deleteCategory", cateNo);
-		
-		return count;
+		return sqlSession.delete("category.deleteCategory", cateNo);
 	}
 	
 	
 	public int selectRecent(String id) {
-		int count = sqlSession.selectOne("category.selectRecent", id);
-		
-		return count;
+		return sqlSession.selectOne("category.selectRecent", id);
 	}
 	
 	
 	public String selectName(int cateNo) {
-		String cateName = sqlSession.selectOne("category.selectName", cateNo);
-		
-		return cateName;
+		return sqlSession.selectOne("category.selectName", cateNo);
 	}
 }

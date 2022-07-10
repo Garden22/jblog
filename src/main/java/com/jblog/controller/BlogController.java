@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,14 @@ public class BlogController {
 	private BlogService bService;
 	
 	@RequestMapping({"/{id}/{postNo}", "/{id}"})
-	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer postNo, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer pageNo, Model model) {
+	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer postNo, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer pageNo, Model model, HttpServletRequest request) {
 		System.out.println("blog > " + id + " > main");
 		
 		Map<String, Object> map = bService.blogInfo(new PostVo(postNo, cateNo, pageNo, id));
 		model.addAllAttributes(map);
 		
+		if (map.containsKey("error")) return "/error/404";
+				
 		return "/blog/blog-main";
 	}
 
