@@ -3,6 +3,7 @@ package com.jblog.service;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +91,32 @@ public class BlogService {
 		return map;
 	}
 	
+	
+	public Map<String, Object> search(String keyword, String option, int pageNo) {		
+		Map<String, Object> map = new HashMap<>();
+		List<BlogVo> bList = new ArrayList<>();
+		int count = 0;
+		
+		if (option != null) {
+			map.put("pageNo", pageNo);
+			map.put("keyword", keyword);
+			map.put("option", option);
+						
+			if (option.equals("title")) {
+				bList = bDao.selectByTitle(map);
+				count = bDao.selectTitleCnt(keyword);
+				
+			} else if (option.equals("name")) {
+				bList = bDao.selectByName(map);
+				count = bDao.selectNameCnt(keyword);
+			}
+
+			map.put("bList", bList);
+			map.put("paging", new PagingVo(count, pageNo));
+		}
+		return map;
+	}
+
 	
 	public void blogBasicUpdate(BlogVo bVo, MultipartFile file, String title) {
 		if (!file.isEmpty()) {
