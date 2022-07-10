@@ -34,7 +34,7 @@ public class BlogService {
 	public Map<String, Object> blogInfo(String id) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("bVo", bDao.selectBlog(id));
-		map.put("cList", cDao.selectCate(id));
+		map.put("cList", cDao.selectCateName(id));
 		
 		return map;
 	}
@@ -52,17 +52,20 @@ public class BlogService {
 		map.put("bVo", bDao.selectBlog(id));
 		map.put("cList", cDao.selectCate(id));
 		
+		
 		if (cateNo == 0 && pageNo == 0 && postNo != 0) {
 			cateNo = pDao.selectFromPost(new PostVo(postNo, id));
 			
 			if (cateNo == null) {
-				map.put("error", "error");
+				map.put("error", "404error");
 				
 				return map;
 			}
+			
 			int temp = pDao.selectTemp(new PostVo(postNo, cateNo));
 			pageNo = (temp - 1) / 5 + 1;
 		}
+		
 
 		if (cateNo == 0) cateNo = cDao.selectRecent(id);
 		map.put("cateName", cDao.selectName(cateNo));
@@ -71,6 +74,7 @@ public class BlogService {
 		List<PostVo> pList = pDao.selectCatePost(new PagingVo(cateNo, pageNo, 5));
 		map.put("pList", pList);
 				
+		
 		if (pList.isEmpty()) {
 			map.put("post", null);
 			map.put("paging", null);
@@ -152,5 +156,15 @@ public class BlogService {
 		} else System.out.println("[카테고리 추가 실패]");
 		
 		return cateNo;
+	}
+	
+	
+	public List<CategoryVo> getCategory(String id) {
+		System.out.println("id " + id);
+		List<CategoryVo> cList = cDao.selectCate(id);
+		System.out.println(cList.toString());
+		System.out.println("[" + cList.size() + "건 불러옴]");
+		
+		return cList;
 	}
 }
