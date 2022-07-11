@@ -109,6 +109,35 @@ public class BlogService {
 
 		return map;
 	}
+	
+	
+	public String viewImg(MultipartFile file) {
+		String path = null;
+		
+		if (!file.isEmpty()) {
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+			
+			String saveDir = "C:\\javastudy\\temp";
+			String filePath = saveDir + "\\" + saveName;
+			path = "/temp/" + saveName;
+			
+			try {
+				byte[] fileData = file.getBytes();
+				BufferedOutputStream bs = new BufferedOutputStream(new FileOutputStream(filePath));
+				
+				bs.write(fileData);
+				System.out.println("[저장완료]");
+				bs.close();
+				
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		} 
+		
+		return path;
+	}
 
 	
 	public void blogBasicUpdate(BlogVo bVo, MultipartFile file, String title) { // 블로그 기본 업데이트

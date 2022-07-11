@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,6 +92,20 @@ public class BlogController {
 		model.addAllAttributes(map);
 		
 		return "/blog/admin/blog-admin-cate";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/viewImg") // 이미지 미리보기
+	public String viewImg(BlogVo fileInfo) {
+		System.out.println("fileaddress");
+		
+		MultipartFile file = fileInfo.getFile();
+		System.out.println(file.isEmpty());
+		
+		String path = bService.viewImg(file);
+		
+		return path;
 	}
 	
 	

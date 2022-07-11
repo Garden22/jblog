@@ -8,6 +8,8 @@
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
+
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 			      		</tr>
 			      		<tr>
 			      			<td><label>로고이미지</label></td>
-			      			<td id="logo-upload" class="text-left"><img src="${pageContext.request.contextPath}${bVo.logoFile}"></td>   
+			      			<td id="logo-upload" class="text-left"><img id="showImg" src="${pageContext.request.contextPath}${bVo.logoFile}"></td>   
 			      		</tr>      		
 			      		<tr>
 			      			<td>&nbsp;</td>
@@ -63,5 +65,34 @@
 	<!-- //wrap -->
 	
 </body>
+
+<script type="text/javascript">
+
+$("#textLogo").on("change", function(){ // 변경한 로고 이미지 미리보기
+	var file = $("#textLogo").get(0).files[0];
+	
+	var formData = new FormData();
+	formData.append('file', file);
+		
+	$.ajax({
+		type : "POST",
+		url : "${pageContext.request.contextPath}/blog/viewImg",
+		processData: false,
+		contentType: false,
+		data: formData,
+	    
+		success : function(path){
+			if (path != null) {
+				console.log(path)
+				$("#showImg").attr("src", "${pageContext.request.contextPath}" + path);
+			}
+		},
+		error: function(xhr, status, error){
+			alert("오류 발생" + error);
+		}
+	});
+});
+
+</script>
 
 </html>
