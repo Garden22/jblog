@@ -19,15 +19,15 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/category">카테고리</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/blog/${bVo.id}/admin/writeForm">글작성</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${bVo.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${bVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${bVo.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			
 			<!-- //admin-menu -->
 			<div id="admin-content">
 			
-				<form id="basic-form" action="${pageContext.request.contextPath}/blog/${bVo.id}/basicChange" method="post" enctype="multipart/form-data">
+				<form id="basic-form" action="${pageContext.request.contextPath}/${bVo.id}/basicChange" method="post" enctype="multipart/form-data">
 	 		      	<table id="admin-basic">
 	 		      		<colgroup>
 							<col style="width: 100px;">
@@ -76,7 +76,7 @@ $("#textLogo").on("change", function(){ // 변경한 로고 이미지 미리보�
 		
 	$.ajax({
 		type : "POST",
-		url : "${pageContext.request.contextPath}/blog/viewImg",
+		url : "${pageContext.request.contextPath}/viewImg",
 		processData: false,
 		contentType: false,
 		data: formData,

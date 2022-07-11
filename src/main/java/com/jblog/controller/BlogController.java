@@ -26,14 +26,13 @@ import com.jblog.vo.CategoryVo;
 import com.jblog.vo.PostVo;
 import com.jblog.vo.UserVo;
 
-@RequestMapping("/blog")
 @Controller
 public class BlogController {
 
 	@Autowired
 	private BlogService bService;
-	
-	@RequestMapping({"/{id}/{postNo}", "/{id}"}) // 블로그 메인
+			
+	@RequestMapping({"/{id:(?! assets|upload|temp).*}/{postNo}", "/{id:(?! assets|upload|temp).*}"}) // 블로그 메인
 	public String main(@PathVariable("id") String id, @PathVariable(required=false) Integer postNo, @RequestParam(required=false) Integer cateNo, @RequestParam(required=false) Integer pageNo, Model model, HttpServletRequest request) {
 		System.out.println("blog > " + id + " > main");
 		
@@ -73,7 +72,7 @@ public class BlogController {
 		bService.blogBasicUpdate((BlogVo)map.get("bVo"), file, title);
 		
 		id = URLEncoder.encode(id, "UTF-8");
-		return "redirect:/blog/" + id + "/admin/basic";
+		return "redirect:/" + id + "/admin/basic";
 	}
 	
 	
@@ -168,6 +167,6 @@ public class BlogController {
 		bService.writePost(post);
 		
 		id = URLEncoder.encode(id, "UTF-8");
-		return "redirect:/blog/" + id + "/admin/writeForm";
+		return "redirect:/" + id + "/admin/writeForm";
 	}
 }
