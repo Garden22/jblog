@@ -1,6 +1,7 @@
 package com.jblog.service;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -169,6 +170,10 @@ public class BlogService {
 		
 		if (count > 0) System.out.println("[업데이트가 완료되었습니다.]");
 		else System.out.println("[업데이트가 실패했습니다.]");
+		
+		File rootDir = new File("C:/javaStudy/temp/"); // 미리보기 사진들 삭제
+		File[] fileList = rootDir.listFiles();
+		for (File delFile: fileList) delFile.delete();
 	}
 	
 	
