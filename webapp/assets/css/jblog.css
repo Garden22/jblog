@@ -188,6 +188,24 @@ div#footer		{ color:#666 }
 #post_area #list table td {padding: 6px 5px 6px 5px; }
 
 
+/* 개인블로그 오른쪽영역(코멘트작성) */
+#post_area #cmtBox									{width: 790px; border-bottom: 3px solid #808080;}
+#post_area #cmtBox fieldset							{margin: 20px 0px 0px 0px; padding: 5px 5px 5px 0px;}
+#post_area #cmtBox #userName							{width: 90px; margin: 5px 0px; height: 25.5px; float: left; padding: 8.5px 0px 0px 0px; font-size: 13px;}
+#post_area #cmtBox #cmtContent						{width: 610px; float: left;}
+#post_area #cmtBox #cmtContent input[type="text"]	{width: 100%; margin: 5px 0px; height: 30px; font-size: 13px;}
+#post_area #cmtBox #cmtAdd							{width: 70px; margin: 5px 0px; float: right;}
+#post_area #cmtBox #cmtAdd #btn-addcmt				{width: 95%; height: 34px; text-align: center;}
+
+
+/* 개인블로그 오른쪽영역(코멘트 리스트) */
+#post_area #cmtBox #cmlList {padding: 10px 5px 0px 0px;}
+#post_area #cmtBox #cmlList .cmtLine {width: 790px; height: 24px; padding: 10px 0px; border-top: 1px solid #BDBDBD;}
+#post_area #cmtBox #cmtList .cmtUser {display: inline-block; width: 90px; height: 21px; text-align: center; font-size: 13px;} 
+#post_area #cmtBox #cmtList .cmtCnt	{display: inline-block; width: 590px; height: 21px; font-size: 13px;}
+#post_area #cmtBox #cmtList .cmtDate{display: inline-block; width: 65px; height: 21px; font-size: 13px;}
+#post_area #cmtBox #cmtList .cmtDel {display: inline-block; width: 15px; padding: 1px 0px 0px 0px; text-align: center; cursor: pointer;}
+
 /****************************************************************/
 /* 개인블로그 어드민 ***************************************************/
 /****************************************************************/
